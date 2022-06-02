@@ -1,0 +1,147 @@
+body {
+	background-color: #000000;
+	font-family: 'Lato', sans-serif;
+	padding: 40px;
+	margin:0;
+	width: 800px;
+}
+
+a, p {
+	margin: 0;
+}
+
+header {
+	display: flex;
+	justify-content: space-between;
+}
+
+header a{
+	color: #FFD6C0;
+	font-size: 16px;
+	text-decoration: none;
+	margin:0 10px;
+}
+
+#logo a{
+	margin: 0;
+	color: #51E5FF;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+header #menu a:hover{
+	color: #51E5FF;
+	text-decoration: underline;
+}
+
+#greeting-section {
+	display: flex;
+	flex-direction: column;
+	margin: 100px 0;
+	color: #FFD6C0;
+	font-size: 20px;
+}
+
+#hello-word {
+	color: #51E5FF;
+	padding-bottom: 20px;
+}
+
+#intro-sent {
+	font-size: 36px;
+	font-weight: bold;
+}
+
+#name {
+	color: #51E5FF;
+}
+
+#greeting-section a {
+	width: 260px;
+	text-decoration: none;
+	color: #FFD6C0;
+}
+#greeting-section a:hover {
+	font-size: 22px;
+	color: #FFA5A5;
+}
+
+#greeting-btn-container {
+	margin-top: 40px;
+}
+
+.greeting-btn{
+	font-family: 'Lato', sans-serif;
+	font-weight: bold;
+	border-radius: 20px;
+	border-radius: 20px;
+	width: 110px;
+	padding: 10px;
+}
+
+.greeting-btn:hover {
+	border: 2px solid whitesmoke;
+}
+
+#hire-me-btn {
+	color: #000000;
+	background-color: #51E5FF;
+}
+#hire-me-btn:hover {
+	border: 2px solid whitesmoke;
+}
+
+#my-works-btn {
+	color: #FFD6C0;
+	border: 2px solid #51E5FF;
+	background-color: #000000;
+	margin-left: 20px;
+}
+
+#my-works-btn:hover {
+	border: 2px solid whitesmoke;
+}
+
+#about-me {
+	display: flex;
+	justify-content: space-between;
+}
+
+#img-about-me {
+	margin-left:50px;
+	width: 300px;
+}
+
+#about-me-text {
+	margin-left: 50px;
+	color: #FFD6C0;
+}
+
+#about-me-title {
+	font-size: 48px;
+	font-weight: bold;
+}
+
+#about-me-disc {
+	color: #FFA5A5;
+	padding: 20px 0;
+}
+
+#about-me-details {
+	display: flex;
+}
+
+#about-me-first-column {
+	width: 150px;
+}
+
+.about-me-list {
+	text-align: top;
+	padding: 5px 0;
+}
+
+.about-me-list-disc {
+	text-align: top;
+	color: #FFA5A5;
+	padding: 5px 0;
+}
