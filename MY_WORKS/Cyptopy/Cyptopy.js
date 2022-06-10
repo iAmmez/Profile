@@ -126,7 +126,7 @@ function update(){
 		wday :  parseInt(waitingDayInput.value),
 		price_ration: receivingAmount/amountInput.value,
 		income_m : 1.01,
-		income_M : 1.1
+		income_M : 1.05
 	}
 
 	data = calWhole(infor)
