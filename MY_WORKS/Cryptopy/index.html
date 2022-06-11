@@ -6,11 +6,13 @@
 		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
 		<link href="index.css" rel="stylesheet">
 		<script src="https://kit.fontawesome.com/2badc195b2.js" crossorigin="anonymous"></script>
+		<script src='https://cdn.plot.ly/plotly-2.12.1.min.js'></script>
 	</head>
 	<body>
-		<div id="app-container">
-			<div id="zero-container">
-				<div class="zero-exp" id="main-body">
+		<!-- The beginning of app -->
+		<div id="app-container"> 
+			<div class="zero-exp" id="main-container"> <!-- Containing 1.main body and 2.sliding-up-down btn -->
+				<div id="main-body">
 					<div id="first-exp-state-container">
 						<div id="main-title">
 							<h1>Cryptopy</h1>
@@ -23,8 +25,8 @@
 							</div>
 							<button id="swap-btn">SWAP!</button>
 							<div id="swap-infor">
-								<div class='swap-inline'><p >Holding coin:</p><input type="text" id = "holding-coin-input"></div>
-		 						<div class='swap-inline'><p>Amount:</p><input type="number" id = "amount-input"></div>
+								<div class='swap-inline'><p >Holding coin:</p><input type="text" id = "holding-coin-input" ></div>
+		 						<div class='swap-inline'><p>Amount:</p><input type="number" id = "amount-input" value=0></div>
 								<div class='swap-inline'><p>Buying coin:</p><input type="text" id = "buying-coin-input"></div>
 								<div class='swap-inline'><p>Fee:</p><input type="number" id = "fee-input" value=0.1></div>
 							</div>
@@ -32,8 +34,30 @@
 					</div>
 					<div class="inactive" id="second-exp-state-container">
 						<div id="swap-tracker">
+							<div class = "exp-section-header">
+								<p>Swapping tracker</p>
+								<button class="control-btn" id="swap-tracker-setting-btn"><i class="fa-solid fa-gear"></i></button>
+								<button class="control-btn" id="swap-tracker-auto-btn"><i class="fa-solid fa-check"></i></button>
+							</div>
+							<div id="swap-tracker-graph">
+							</div>
+							<div id="swap-tracker-message"></div>
+							<div class="inactive" id="swap-tracker-setting">
+								<button class="cls-btn" id="cls-tracker-setting-btn"><i class="fa-solid fa-x"></i></button>
+							</div>
 						</div>
 						<div id="prob-of-success">
+							<div class = "exp-section-header">
+								<p>Probability of success</p>
+								<button class="control-btn" id="prob-of-success-setting-btn"><i class="fa-solid fa-gear"></i></button>
+								<button class="control-btn" id="prob-of-success-auto-btn"><i class="fa-solid fa-check"></i></button>
+							</div>
+							<div id="prob-of-success-graph">
+							</div>
+							<div id="prob-of-success-message"></div>
+							<div class="inactive" id="prob-of-success-setting">
+								<button class="cls-btn" id="cls-prob-of-success-setting-btn"><i class="fa-solid fa-x"></i></button>
+							</div>
 						</div>
 					</div>
 					<div class="inactive" id="third-exp-state-container">
@@ -45,7 +69,7 @@
 				</div>
 				<button class="active exp-btn" id="first-exp-btn"><i class="fa-solid fa-caret-down"></i></button>
 			</div>
-			<div>
+			<div id="right-tab"> <!-- Containing 2.two sliding-right-left btns -->
 				<div id="sec-third-exp-btn-container">
 					<button class="inactive exp-btn" id="second-exp-btn"><i class="fa-solid fa-caret-right"></i></button>
 					<button class="inactive exp-btn" id="third-exp-btn"><i class="fa-solid fa-caret-right"></i></button>
