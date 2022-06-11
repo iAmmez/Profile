@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
+		<link href="index.css" rel="stylesheet">
+		<script src="https://kit.fontawesome.com/2badc195b2.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<div id="app-container">
+			<div id="zero-container">
+				<div class="zero-exp" id="main-body">
+					<div id="first-exp-state-container">
+						<div id="main-title">
+							<h1>Cryptopy</h1>
+							<p>by drsaihang</p>
+						</div>
+						<div class="inactive" id="swap-container">
+							<div id="log">
+								<h1>LOG</h1>
+								<div id="log-message"></div>
+							</div>
+							<button id="swap-btn">SWAP!</button>
+							<div id="swap-infor">
+								<div class='swap-inline'><p >Holding coin:</p><input type="text" id = "holding-coin-input"></div>
+		 						<div class='swap-inline'><p>Amount:</p><input type="number" id = "amount-input"></div>
+								<div class='swap-inline'><p>Buying coin:</p><input type="text" id = "buying-coin-input"></div>
+								<div class='swap-inline'><p>Fee:</p><input type="number" id = "fee-input" value=0.1></div>
+							</div>
+						</div>
+					</div>
+					<div class="inactive" id="second-exp-state-container">
+						<div id="swap-tracker">
+						</div>
+						<div id="prob-of-success">
+						</div>
+					</div>
+					<div class="inactive" id="third-exp-state-container">
+						<div id="price-tracker">
+						</div>
+						<div id="statistical-data">
+						</div>
+					</div>
+				</div>
+				<button class="active exp-btn" id="first-exp-btn"><i class="fa-solid fa-caret-down"></i></button>
+			</div>
+			<div>
+				<div id="sec-third-exp-btn-container">
+					<button class="inactive exp-btn" id="second-exp-btn"><i class="fa-solid fa-caret-right"></i></button>
+					<button class="inactive exp-btn" id="third-exp-btn"><i class="fa-solid fa-caret-right"></i></button>
+				</div>
+			</div>
+		</div>
+		<script src="index.js"></script>
+	</body>
+</html>
