@@ -1,0 +1,235 @@
+body {
+	margin: 0;
+	font-family: 'Oswald', sans-serif;
+	font-size: 16px;
+	text-shadow: 0 0.25em 0.25em black;
+}
+
+h1, p{
+	margin: 0;
+}
+
+input {
+	box-shadow: inset 0 0 5px gray;
+	border-radius: 5px;
+}
+
+/*Typography*/
+
+#main-body h1{
+	color: #FDE74C;
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+
+#main-body p{
+	color: #FFF;
+	font-size: 1.25rem;
+	font-weight: lighter;
+}
+
+/*control*/
+.active{
+	display: block;
+}
+
+.inactive{
+	display: none;
+}
+
+/*App body*/
+#app-container {
+	margin: 50px auto 0 auto;
+	display: flex;
+	justify-content: center;
+}
+
+#main-body {
+	background-color: #4C5B5C;
+	box-shadow: inset 0 0 10px black;
+	border: none;
+	border-radius: 20px;
+	display: flex;
+}
+
+#first-exp-state-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 auto;
+}
+
+.zero-exp {
+	height: 150px;
+	width: 220px;
+	transition: height 500ms, width 500ms;
+}
+
+.first-exp {
+	height: 460px;
+	width: 220px;
+	transition: height 500ms, width 500ms;
+}
+
+.second-exp {
+	height: 460px;
+	width: 440px;
+	transition: height 500ms, width 500ms;
+}
+
+.third-exp {
+	height: 460px;
+	width: 660px;
+	transition: height 500ms, width 500ms;
+}
+
+#main-title{
+	margin: auto;
+	text-align: center;
+	height: 5.5625rem;
+	width: 9.25rem;
+}
+
+/*swap-container*/
+
+#swap-container{
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+#log {
+	height: 120px;
+	width: 170px;
+	border: solid 1px black;
+	border-radius: 10px;
+	margin: auto auto 10px auto;
+}
+
+#log h1{
+	text-align: center;
+	color: whitesmoke;
+	font-size: 1rem;
+}
+
+#log-message {
+	margin-top: 10px;
+}
+
+#log p{
+	font-size: 14px;
+}
+
+#swap-btn {
+	font-family: 'Oswald', sans-serif;
+	font-weight: bold;
+	color: #4C5B5C;
+	display: block;
+	margin: 15px auto;
+	width: 170px;
+	height: 30px;
+	background-color: #FDE74C;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+#swap-btn:hover, #swap-btn:focus {
+	box-shadow: 0 0 10px #E3655B;
+}
+
+#swap-btn:active {
+	color: #E3655B;
+}
+
+#swap-infor {
+	margin: 0 auto;
+	width: 170px;
+}
+
+#swap-infor input{
+	width: 60px;
+}
+.swap-inline{
+	display: flex;
+	justify-content: space-between;
+	margin: 5px 0;
+}
+
+#swap-infor input{
+	font-family: 'Oswald', sans-serif;
+}
+
+/*second expension*/
+#swap-tracker {
+	width: 220px;
+	height: 200px;
+	margin: 20px 10px 10px 0;
+	border: solid 1px black;
+	border-radius: 20px;
+}
+
+#prob-of-success {
+	width: 220px;
+	height: 200px;
+	margin: 20px 10px 10px 0;
+	border: solid 1px black;
+	border-radius: 20px;
+}
+
+/*third expension*/
+#price-tracker {
+	width: 220px;
+	height: 200px;
+	margin: 20px 10px 10px 0;
+	border: solid 1px black;
+	border-radius: 20px;
+}
+
+#statistical-data {
+	width: 220px;
+	height: 200px;
+	margin: 20px 10px 10px 0;
+	border: solid 1px black;
+	border-radius: 20px;
+}
+
+/*Expanding buttons*/
+.exp-btn {
+	color: #FDE74C;
+	background-color: #4C5B5C;
+	border: solid 1px black;
+	box-shadow: inset 0 0 10px black;
+	transition: width 0.3s, height 0.3s;
+
+}
+
+#first-exp-btn {
+	margin:0 auto;
+	width: 50px;
+	height: 30px;
+	border-radius: 0 0 10px 10px;	
+}
+
+#first-exp-btn:hover {
+	width: 60px;
+	transition: width 0.3s;
+}
+
+#second-exp-btn:hover, #third-exp-btn:hover {
+	height: 60px;
+	transition: height 0.3s;
+}
+
+
+#sec-third-exp-btn-container{
+	display: flex;
+	height: 100%;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+#sec-third-exp-btn-container button{
+	width: 30px;
+	height: 50px;
+	border-radius: 0 10px 10px 0;
+}
