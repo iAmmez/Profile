@@ -41,7 +41,11 @@ firstExpBtn.addEventListener("click",function(){
 		secondExpBtn.classList.add("inactive")
 
 		firstExpBtn.innerHTML = '<i class="fa-solid fa-caret-down"></i>'
-
+		logMessage.innerHTML = ''
+		holdingCoinInput.value = ''
+		amountInput.value = 0
+		buyingCoinInput.value = ''
+		feeInput.value = 0.1
 		expState--
 	}
 })
@@ -71,6 +75,7 @@ secondExpBtn.addEventListener("click",function(){
 		thirdExpBtn.classList.add("inactive")
 
 		secondExpBtn.innerHTML = '<i class="fa-solid fa-caret-right"></i>'
+
 		expState--
 	}
 })
@@ -101,18 +106,19 @@ thirdExpBtn.addEventListener("click",function(){
 })
 
 swapBtn.addEventListener("click", function(){
-	getSource(holdingCoinInput.value,getPrice)
-	getSource(buyingCoinInput.value,getPrice)
+	getSource(holdingCoinInput.value.toUpperCase(),getPrice)
+	getSource(buyingCoinInput.value.toUpperCase(),getPrice)
 
 	receivingAmount = (holding_coin_price*amountInput.value*(1-feeInput.value/100)**2)/buying_coin_price
 	receivingAmount = receivingAmount.toFixed(4)
 
 	logMessage.innerHTML=`
-	<p>Sell <strong>${holdingCoinInput.value}</strong> at <strong>${holding_coin_price}</strong> USDT</p>
-	<p>Buy <strong>${buyingCoinInput.value}</strong> at <strong>${buying_coin_price}</strong> USDT</p>
-	<p>Receive <strong>${receivingAmount} ${buyingCoinInput.value}</strong>
+	<p>Sell <strong>${holdingCoinInput.value.toUpperCase()}</strong> at <strong>${holding_coin_price}</strong> USDT</p>
+	<p>Buy <strong>${buyingCoinInput.value.toUpperCase()}</strong> at <strong>${buying_coin_price}</strong> USDT</p>
+	<p>Receive <strong>${receivingAmount} ${buyingCoinInput.value.toUpperCase()}</strong>
 	`	
 })
+
 
 function getSource(CoinInput,callback) {
 	xhttp.onreadystatechange = function () {
@@ -130,9 +136,9 @@ function getPrice(stringData){
 	 let price = 0
 	 const objectData = JSON.parse(stringData)
 	 if (stringData!=""){
-	 	if (objectData.symbol.replace('USDT', '')===holdingCoinInput.value){
+	 	if (objectData.symbol.replace('USDT', '')===holdingCoinInput.value.toUpperCase()){
 	 		holding_coin_price = parseFloat(objectData.price)
-	 	} else if (objectData.symbol.replace('USDT', '')===buyingCoinInput.value){
+	 	} else if (objectData.symbol.replace('USDT', '')===buyingCoinInput.value.toUpperCase()){
 	 		buying_coin_price = parseFloat(objectData.price)
 	 	}
 	 }
