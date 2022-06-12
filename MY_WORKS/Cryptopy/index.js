@@ -29,6 +29,7 @@ const initProfitInput = document.getElementById("init-profit-input")
 const finalProfitInput = document.getElementById("final-profit-input")
 const probOfSuccessMessage = document.getElementById("prob-of-success-message")
 const specificPriceInput = document.getElementById("specific-price-input")
+const loading = document.getElementById("loading")
 
 const delay = 200
 let timer = 0
@@ -80,6 +81,8 @@ const probOfSuccessTrackerLayout = {
 		color: "#FFFFFF"
 	}
 }
+
+const sleep = ms => new Promise(r => setTimeout(r, ms))
 
 Plotly.newPlot('swap-tracker-graph', swapTrackerData,swapTrackerLayout)
 Plotly.newPlot('prob-of-success-graph', probOfSuccessTrackerData,probOfSuccessTrackerLayout)
@@ -197,23 +200,16 @@ clsTrackerSettingBtn.addEventListener("click", function(){
 })
 
 swapTrackerAutoBtn.addEventListener("click",function(){
-	timer = setTimeout(function() {
-	if (!prevent) {
-		trackingSwapping()
-	}
-	prevent = false;
-	}, delay);
-})
-
-swapTrackerAutoBtn.addEventListener("dblclick",function(){
-	clearTimeout(timer);
-	prevent = true;
 	if(!swapTrackerRunState){
 		swapTrackerRun = window.setInterval('trackingSwapping()',  getSwappingRate());
 		swapTrackerRunState = true
+		swapTrackerAutoBtn.style.background = "#E3655B"
+		swapTrackerAutoBtn.innerHTML = '<i class="fa-solid fa-x"></i>'
 	} else {
 		clearInterval(swapTrackerRun)
 		swapTrackerRunState = false
+		swapTrackerAutoBtn.style.background = "#3891A6"
+		swapTrackerAutoBtn.innerHTML = '<i class="fa-solid fa-check"></i>'
 	}
 })
 
@@ -227,19 +223,13 @@ clsProbOfSuccessSettingBtn.addEventListener("click", function(){
 	probOfSuccessSetting.classList.add("inactive")
 })
 
-probOfSuccessAutoBtn.addEventListener("click",function(){
-	timer = setTimeout(function() {
-	if (!prevent) {
-		calProOfSuccess()
-	}
-	prevent = false;
-	}, delay);
-})
-
-probOfSuccessAutoBtn.addEventListener("dblclick",function(){
-	clearTimeout(timer);
-	prevent = true;
-	console.log("double clicked!")
+probOfSuccessAutoBtn.addEventListener("click",async function(){
+	loading.classList.remove("inactive")
+	loading.classList.add("active")
+	await sleep(0.5)
+	calProOfSuccess()
+	loading.classList.remove("active")
+	loading.classList.add("inactive")
 })
 
 function getSource(CoinInput,callback) {
