@@ -224,12 +224,18 @@ clsProbOfSuccessSettingBtn.addEventListener("click", function(){
 })
 
 probOfSuccessAutoBtn.addEventListener("click",async function(){
-	loading.classList.remove("inactive")
-	loading.classList.add("active")
-	await sleep(1)
-	calProOfSuccess()
-	loading.classList.remove("active")
-	loading.classList.add("inactive")
+	for(let i =0;i<2;i++){
+		if(i===0){
+			loading.classList.remove("inactive")
+			loading.classList.add("active")
+			await sleep(500)
+		} if(i===1){
+			calProOfSuccess()
+			loading.classList.remove("active")
+			loading.classList.add("inactive")
+		}
+	}
+
 })
 
 function getSource(CoinInput,callback) {
@@ -293,7 +299,7 @@ function getSwappingRate(){
 	return  Math.floor(numRateSwapping.value*unit)
 }
 
-function calProOfSuccess(){
+async function calProOfSuccess(){
 	holdingCoinInput.value = holdingCoinInput.value.toUpperCase()
 	buyingCoinInput.value = buyingCoinInput.value.toUpperCase()
 	let varAmount = 0
