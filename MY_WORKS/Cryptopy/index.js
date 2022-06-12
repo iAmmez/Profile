@@ -226,7 +226,7 @@ clsProbOfSuccessSettingBtn.addEventListener("click", function(){
 probOfSuccessAutoBtn.addEventListener("click",async function(){
 	loading.classList.remove("inactive")
 	loading.classList.add("active")
-	await sleep(0.5)
+	await sleep(1)
 	calProOfSuccess()
 	loading.classList.remove("active")
 	loading.classList.add("inactive")
