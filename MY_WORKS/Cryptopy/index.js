@@ -178,7 +178,7 @@ swapBtn.addEventListener("click", function(){
 	getSource(buyingCoinInput.value,getPrice)
 
 	receivingAmount = (holding_coin_price*amountInput.value*(1-feeInput.value/100)**2)/buying_coin_price
-
+	receivingAmount = receivingAmount.toFixed(4)
 	logMessage.innerHTML=`
 	<p>Sell <strong>${holdingCoinInput.value}</strong> at <strong>${holding_coin_price}</strong> USDT</p>
 	<p>Buy <strong>${buyingCoinInput.value}</strong> at <strong>${buying_coin_price}</strong> USDT</p>
@@ -271,6 +271,7 @@ function trackingSwapping(){
 	getSource(buyingCoinInput.value,getPrice)
 	getSource(holdingCoinInput.value,getPrice)
 	receivingAmount = (holding_coin_price*amountInput.value*(1-feeInput.value/100)**2)/buying_coin_price
+	receivingAmount = receivingAmount.toFixed(4)
 	swapTrackerData[0].y.push(receivingAmount)
 	swapTrackerData[0].x.push(swapTrackerData[0].y.length)
 	if(swapTrackerData[0].y.length>60){
