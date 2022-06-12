@@ -7,11 +7,22 @@ body {
 	min-width: 800px;
 }
 
-h1, p{
+h1, p {
 	margin: 0;
 }
 
+ul {
+	padding: 0 10px;
+	list-style-type: none;
+}
+
+select, input{
+	font-family: 'Oswald', sans-serif;}
+
 input {
+	width: 40%;
+	height: 20px;
+	font-size: 1rem;
 	box-shadow: inset 0 0 0.3125rem gray;
 	border-radius: 0.3125rem;
 }
@@ -92,6 +103,10 @@ input {
 	width: 100%;
 }
 
+#swap-container input {
+	height: 20px;
+}
+
 #log, #swap-btn, #swap-infor{
 	width: 90%;
 }
@@ -142,17 +157,11 @@ input {
 	margin: 0 auto;
 }
 
-#swap-infor input{
-	width: 40%;
-}
-.swap-inline{
+.set-inline{
 	display: flex;
+	align-items: flex-end;
 	justify-content: space-between;
 	margin: 5px 0;
-}
-
-#swap-infor input{
-	font-family: 'Oswald', sans-serif;
 }
 
 /*second expension*/
@@ -162,9 +171,9 @@ input {
 }
 
 #swap-tracker, #prob-of-success, #price-tracker, #statistical-data{
-	margin: 10px auto;
+	margin: 5px auto;
 	width: 90%;
-	height: 200px;
+	height: 210px;
 	border-radius: 20px;
 	text-align: center;
 	border: solid 1px black;
@@ -182,11 +191,10 @@ input {
 	background-color: gray;
 	opacity: 0.9;
 	position: relative;
-	transform: translate(5%,-90%);
+	transform: translate(5%,-170%);
 	width: 90%;
-	height: 180px;
+	height: 100px;
 }
-
 
 .cls-btn {
 	border-radius: 50%;
@@ -194,6 +202,33 @@ input {
 	width: 30px;
 	height: 30px;
 	cursor: pointer;
+}
+
+#swap-tracker-setting p{
+	font-size: 0.875rem;
+}
+
+#swap-tracker-setting input{
+	width: 20%;
+}
+
+#swap-tracker-message{
+	display: inline;
+}
+
+#prob-of-success-setting{
+	position: relative;
+	transform: translate(5%,-90%);
+	width: 90%;
+	height: 280px;
+}
+
+#profit-label{
+	text-align: left;
+}
+
+#prob-of-success-message p {
+	font-size: 12px;
 }
 
 .exp-section-header p{
@@ -215,7 +250,7 @@ input {
 }
 
 .control-btn:hover {
-	background-color: #2bb6d6;
+	background-color: #2BB6D6;
 }
 .control-btn:active {
 	animation: shake 0.2s;
