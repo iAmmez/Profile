@@ -42,6 +42,10 @@ let buying_coin_price = 0
 let receivingAmount = 0
 const xhttp = new XMLHttpRequest()
 
+const config = {
+  displayModeBar: false, // this is the line that hides the bar.
+}
+
 let swapTrackerData = [{
 	x: [],
 	y: [],
@@ -84,8 +88,8 @@ const probOfSuccessTrackerLayout = {
 
 const sleep = ms => new Promise(r => setTimeout(r, ms))
 
-Plotly.newPlot('swap-tracker-graph', swapTrackerData,swapTrackerLayout)
-Plotly.newPlot('prob-of-success-graph', probOfSuccessTrackerData,probOfSuccessTrackerLayout)
+Plotly.newPlot('swap-tracker-graph', swapTrackerData,swapTrackerLayout,config)
+Plotly.newPlot('prob-of-success-graph', probOfSuccessTrackerData,probOfSuccessTrackerLayout,config)
 
 firstExpBtn.addEventListener("click",function(){
 	if(expState===0){
@@ -277,7 +281,7 @@ function trackingSwapping(){
 			swapTrackerData[0].x[i] = swapTrackerData[0].x[i]-1
 		}
 	}
-	Plotly.newPlot('swap-tracker-graph', swapTrackerData,swapTrackerLayout)
+	Plotly.newPlot('swap-tracker-graph', swapTrackerData,swapTrackerLayout,config)
 
 	logMessage.innerHTML=`
 	<p>Sell <strong>${holdingCoinInput.value.toUpperCase()}</strong> at <strong>${holding_coin_price}</strong> USDT</p>
@@ -333,7 +337,7 @@ async function calProOfSuccess(){
 	<strong>${buyingCoinInput.value} ${buying_coin_price}</strong> USDT</p>
 	<p>prob day: <strong>${String(data[3].toFixed(2))}</strong>, avg num evnts: <strong>${String(parseInt(data[2]))}</strong></p>
 	`
-	Plotly.newPlot('prob-of-success-graph', probOfSuccessTrackerData, probOfSuccessTrackerLayout)
+	Plotly.newPlot('prob-of-success-graph', probOfSuccessTrackerData, probOfSuccessTrackerLayout,config)
 }
 
 function klines(holdingCoin,buyingCoin,timeInterval,startDay,endDay){
