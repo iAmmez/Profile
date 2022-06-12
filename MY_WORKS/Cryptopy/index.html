@@ -25,10 +25,10 @@
 							</div>
 							<button id="swap-btn">SWAP!</button>
 							<div id="swap-infor">
-								<div class='swap-inline'><p >Holding coin:</p><input type="text" id = "holding-coin-input" ></div>
-		 						<div class='swap-inline'><p>Amount:</p><input type="number" id = "amount-input" value=0></div>
-								<div class='swap-inline'><p>Buying coin:</p><input type="text" id = "buying-coin-input"></div>
-								<div class='swap-inline'><p>Fee:</p><input type="number" id = "fee-input" value=0.1></div>
+								<div class='set-inline'><p >Holding coin:</p><input type="text" id = "holding-coin-input" ></div>
+		 						<div class='set-inline'><p>Amount:</p><input type="number" id = "amount-input" value=0></div>
+								<div class='set-inline'><p>Buying coin:</p><input type="text" id = "buying-coin-input"></div>
+								<div class='set-inline'><p>Fee:</p><input type="number" id = "fee-input" value=0.1></div>
 							</div>
 						</div>
 					</div>
@@ -43,7 +43,20 @@
 							</div>
 							<div id="swap-tracker-message"></div>
 							<div class="inactive" id="swap-tracker-setting">
-								<button class="cls-btn" id="cls-tracker-setting-btn"><i class="fa-solid fa-x"></i></button>
+								<ul>
+									<il>
+										<button class="cls-btn" id="cls-tracker-setting-btn"><i class="fa-solid fa-x"></i></button>
+									</il>
+									<il class='set-inline'>
+										<p>Swapping every</p>
+										<input id="num-rate-swapping" type="number">
+										<select id="swapping-rate-unit">
+											<option value="sec">sec</option>
+											<option value="min">min</option>
+											<option value="hr">hr</option>
+										</select>
+									</il>
+								</ul>
 							</div>
 						</div>
 						<div id="prob-of-success">
@@ -56,7 +69,32 @@
 							</div>
 							<div id="prob-of-success-message"></div>
 							<div class="inactive" id="prob-of-success-setting">
-								<button class="cls-btn" id="cls-prob-of-success-setting-btn"><i class="fa-solid fa-x"></i></button>
+								<ul>
+									<il>
+										<button class="cls-btn" id="cls-prob-of-success-setting-btn"><i class="fa-solid fa-x"></i></button>
+									</il>
+									<il class='set-inline'>
+										<p>Time interval</p><input id="time-interval-input" type="text" value="5m">
+									</il>
+									<il class='set-inline'>
+										<p>#Day</p><input id="considering-day-input" type="number" value=2>
+									</il>
+									<il class='set-inline'>
+										<p>#Waiting day</p><input id="waiting-day-input" type="number" value=1>
+									</il>
+									<il class='set-inline'>
+										<p>Resolution</p><input id="resolution-input" type="number" value=10>
+									</il>
+									<il id="profit-label">
+										<p>Profit(%) from</p>
+									</il>
+									<il class='set-inline'>
+										<input id="init-profit-input" type="number" value=1><p>to</p><input id="final-profit-input" type="number" value=5>
+									</il>
+									<il class='set-inline'>
+										<p>Specific price</p><input id="specific-price-input" type="number">
+									</il>
+								</ul>
 							</div>
 						</div>
 					</div>
