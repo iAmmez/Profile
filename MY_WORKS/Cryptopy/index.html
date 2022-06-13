@@ -35,21 +35,22 @@
 					<div class="inactive" id="second-exp-state-container">
 						<div id="swap-tracker">
 							<div class = "exp-section-header">
-								<p>Swapping tracker</p>
+								<h2>Swapping tracker</h2>
 								<button class="control-btn" id="swap-tracker-setting-btn"><i class="fa-solid fa-gear"></i></button>
 								<button class="control-btn" id="swap-tracker-auto-btn"><i class="fa-solid fa-check"></i></button>
 							</div>
 							<div id="swap-tracker-graph">
 							</div>
-							<div id="swap-tracker-message"></div>
+							<!-- <div id="swap-tracker-message"></div> -->
 							<div class="inactive" id="swap-tracker-setting">
 								<ul>
-									<il>
+									<il >
+										<button id="clr-graph-btn">clear</button>
 										<button class="cls-btn" id="cls-tracker-setting-btn"><i class="fa-solid fa-x"></i></button>
 									</il>
 									<il class='set-inline'>
 										<p>Swapping every</p>
-										<input id="num-rate-swapping" type="number" value=1>
+										<input id="num-rate-swapping" type="number" value=10>
 										<select id="swapping-rate-unit">
 											<option value="sec">sec</option>
 											<option value="min">min</option>
@@ -61,9 +62,10 @@
 						</div>
 						<div id="prob-of-success">
 							<div class = "exp-section-header">
-								<p>Probability of success</p>
+								<h2 class="small-h2">Probability of success</h2>
 								<button class="control-btn" id="prob-of-success-setting-btn"><i class="fa-solid fa-gear"></i></button>
-								<button class="control-btn" id="prob-of-success-auto-btn"><i class="fa-solid fa-check"></i></button>
+								<button class="control-btn" id="prob-of-success-cal-btn"><i class="fa-solid fa-check"></i></button>
+								<button class="control-btn" id="prob-of-success-auto-btn">auto</button>
 							</div>
 							<div id="prob-of-success-graph"></div>
 							<div id="prob-of-success-message"></div>
