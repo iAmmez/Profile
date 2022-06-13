@@ -1,4 +1,4 @@
-//-----------------Get elements from HTML------------------------------------------------------
+	//-----------------Get elements from HTML------------------------------------------------------
 //Main part
 const mainContainer = document.getElementById("main-container")
 const firstExpBtn 	= document.getElementById("first-exp-btn")
@@ -19,20 +19,20 @@ const secondExpStateContainer 	= document.getElementById("second-exp-state-conta
 //Swap tracker
 const swapTrackerSetting 		= document.getElementById("swap-tracker-setting")
 const swapTrackerSettingBtn 	= document.getElementById("swap-tracker-setting-btn")
+const clsTrackerSettingBtn 		= document.getElementById("cls-tracker-setting-btn")
 const numRateSwapping 			= document.getElementById("num-rate-swapping")
 const swappingRateUnit 			= document.getElementById("swapping-rate-unit")
 const timeIntervalSize			= document.getElementById("time-interval-size")
 const targetPrice				= document.getElementById("target-price")
 const swapTrackerAutoBtn 		= document.getElementById("swap-tracker-auto-btn")
 const clrSwapTrackerGraphBtn 	= document.getElementById("clr-swap-tracker-graph-btn")
-const clsTrackerSettingBtn 		= document.getElementById("cls-tracker-setting-btn")
 
 //Probability of success
 const probOfSuccessSetting 			= document.getElementById("prob-of-success-setting")
 const probOfSuccessSettingBtn 		= document.getElementById("prob-of-success-setting-btn")
+const clsProbOfSuccessSettingBtn 	= document.getElementById("cls-prob-of-success-setting-btn")
 const probOfSuccessCalBtn 			= document.getElementById("prob-of-success-cal-btn")
 const probOfSuccessAutoBtn 			= document.getElementById("prob-of-success-auto-btn")
-const clsProbOfSuccessSettingBtn 	= document.getElementById("cls-prob-of-success-setting-btn")
 const timeIntervalInput 			= document.getElementById("time-interval-input")
 const resolutionInput 				= document.getElementById("resolution-input")
 const consideringDayInput 			= document.getElementById("considering-day-input")
@@ -44,9 +44,18 @@ const probOfSuccessMessage 			= document.getElementById("prob-of-success-message
 const probOfSuccessLoading 			= document.getElementById("prob-of-success-loading")
 
 //Relative price tracker and statistical data
-const thirdExpStateContainer = document.getElementById("third-exp-state-container")
-
-
+const thirdExpStateContainer 		= document.getElementById("third-exp-state-container")
+//Relative price tracker
+const relPriceTrackerSetting		= document.getElementById("rel-price-tracker-setting")
+const relPriceTrackerSettingBtn 	= document.getElementById("rel-price-tracker-setting-btn")
+const clsRelPriceTrackerSettingBtn 	= document.getElementById("cls-rel-price-tracker-setting-btn")
+const relPriceTrackerCalBtn 		= document.getElementById("rel-price-tracker-cal-btn")
+const timeUnit						= document.getElementById("time-unit")
+const startingTime					= document.getElementById("starting-time")
+const endingTime					= document.getElementById("ending-time")
+const showingTimeUnit				= document.getElementById("showing-time-unit")
+const samplingFre					= document.getElementById("sampling-fre")
+const priceType						= document.getElementById("price-type")
 
 //-------------------------------Variable declaration-----------------------------------------------------
 let expState 			= 0			//There are 4 states, i.e., 0 1 2 3
@@ -107,12 +116,31 @@ const 	probOfSuccessTrackerLayout = {
 		size: 10,
 		color: "#FFFFFF"
 	}}
+let 	relativePriceTrackerData = [{
+	x: [],
+	y: [],
+	type: 'scatter',
+	line: {color: '#FDE74C'},}]
+const 	relativePriceTrackeLayout = {
+	margin: {t:0,r:0,l:50,b:35},
+	xaxis: {title:{text: 'time'},
+			gridcolor: '#ffffff',},
+	yaxis: {title:{text: 'relative price'},
+			gridcolor: '#ffffff',},
+	paper_bgcolor: "#4C5B5C",
+	plot_bgcolor: "#4C5B5C",
+	font: {
+		family: 'Oswald',
+		size: 10,
+		color: "#FFFFFF"
+	}}
 
 
 
 //--------------------------Beginning-of-program-----------------------------------
 Plotly.newPlot('swap-tracker-graph', swapTrackerData,swapTrackerLayout,config)
 Plotly.newPlot('prob-of-success-graph', probOfSuccessTrackerData,probOfSuccessTrackerLayout,config)
+Plotly.newPlot('rel-price-tracker-graph', relativePriceTrackerData,relativePriceTrackeLayout,config)
 
 //Waiting for clicking
 //Expansion
@@ -268,6 +296,28 @@ clsProbOfSuccessSettingBtn.addEventListener("click", function(){
 	probOfSuccessSetting.classList.remove("active")
 	probOfSuccessSetting.classList.add("inactive")})
 
+//Relative price tracker
+relPriceTrackerSettingBtn.addEventListener("click",function(){
+	relPriceTrackerSetting.classList.remove("inactive")
+	relPriceTrackerSetting.classList.add("active")})
+clsRelPriceTrackerSettingBtn.addEventListener("click", function(){
+	relPriceTrackerSetting.classList.remove("active")
+	relPriceTrackerSetting.classList.add("inactive")})
+relPriceTrackerCalBtn.addEventListener("click", function(){
+	console.log("Clicked!")
+	priceTracking()
+})
+timeUnit.addEventListener("change",function (){
+	if(timeUnit.value==="h"){
+		showingTimeUnit.textContent = "hours ago"
+	} else if(timeUnit.value==="d"){
+		showingTimeUnit.textContent = "days ago"
+	} else if(timeUnit.value==="w"){
+		showingTimeUnit.textContent = "weeks ago"
+	} else if(timeUnit.value==="M"){
+		showingTimeUnit.textContent = "months ago"
+	}
+})
 
 
 //--------------------------------Function declaration-----------------------------------------------
@@ -279,19 +329,47 @@ function linspace(startValue, stopValue, cardinality) {
 		arr.push(startValue + (step * i))
 	}
 	return arr}
+function klines(holdingCoin,buyingCoin,timeInterval,timeUnitStr,start,end){
+	let timeUnit = 0
 
-//Swapping
-function getSwappingRate(){
-	const stringUnit = swappingRateUnit.value
-	let unit = 0
-	if(stringUnit==="sec"){
-		unit = 1000
-	} else if(stringUnit==="min"){
-		unit = 60000
-	} else if(stringUnit==="hr"){
-		unit = 3600000
-	} 
-	return  Math.floor(numRateSwapping.value*unit)}
+	if(timeUnitStr==="h"){
+		timeUnit = 3600*1000
+	} else if(timeUnitStr==="d"){
+		timeUnit = 24*3600*1000
+	} else if(timeUnitStr==="w"){
+		timeUnit = 7*24*3600*1000
+	} else if(timeUnitStr==="M"){
+		timeUnit = 30*24*3600*1000
+	}
+
+	const endTime = String(new Date().getTime())-end*timeUnit;
+	const startTime = String(new Date().getTime()-start*timeUnit);
+	const burl = "https://api.binance.com"
+	const text1 = `/api/v3/klines?symbol=${holdingCoin}USDT&interval=${timeInterval}&startTime=${startTime}&endTime=${endTime}`
+	const text2 = `/api/v3/klines?symbol=${buyingCoin}USDT&interval=${timeInterval}&startTime=${startTime}&endTime=${endTime}`
+	let Data = []
+
+	function getSource(text,callback) {
+		xhttp.onreadystatechange = function () {
+			if (xhttp.readyState === 4 && xhttp.status === 200){
+				callback(JSON.parse(xhttp.responseText))
+			}
+		}
+		xhttp.open('GET',burl+text,false)
+		xhttp.send();
+	}
+
+	function recievingData1(data) {
+		Data1 = data
+	}
+
+	function recievingData2(data) {
+		Data2 = data
+	}
+	getSource(text1,recievingData1)
+	getSource(text2,recievingData2)
+
+	return [Data1,Data2]}
 function getSource(CoinInput,callback) {
 	xhttp.onreadystatechange = function () {
 		if (xhttp.readyState === 4 && xhttp.status === 200){
@@ -310,6 +388,19 @@ function getPrice(stringData){
 	 		buying_coin_price = parseFloat(objectData.price)
 	 	}
 	 }}
+
+//Swapping
+function getSwappingRate(){
+	const stringUnit = swappingRateUnit.value
+	let unit = 0
+	if(stringUnit==="sec"){
+		unit = 1000
+	} else if(stringUnit==="min"){
+		unit = 60000
+	} else if(stringUnit==="hr"){
+		unit = 3600000
+	} 
+	return  Math.floor(numRateSwapping.value*unit)}
 function trackingSwapping(){
 	getSource(buyingCoinInput.value,getPrice)
 	getSource(holdingCoinInput.value,getPrice)
@@ -337,41 +428,12 @@ function trackingSwapping(){
 	`}
 
 //Probability of success
-function klines(holdingCoin,buyingCoin,timeInterval,startDay,endDay){
-	const endTime = String(new Date().getTime())-endDay*24*3600*1000;
-	const startTime = String(new Date().getTime()-startDay*24*3600*1000);
-	const burl = "https://api.binance.com"
-	const text1 = `/api/v3/klines?symbol=${holdingCoin}USDT&interval=${timeInterval}&startTime=${startTime}&endTime=${endTime}`
-	const text2 = `/api/v3/klines?symbol=${buyingCoin}USDT&interval=${timeInterval}&startTime=${startTime}&endTime=${endTime}`
-	let Data = []
-
-	function getSource(text,callback) {
-		xhttp.onreadystatechange = function () {
-			if (xhttp.readyState === 4 && xhttp.status === 200){
-				callback(JSON.parse(xhttp.responseText))
-			}
-		}
-		xhttp.open('GET',burl+text,false)
-		xhttp.send();
-	}
-
-	function recievingData1(data) {
-		Data1 = data
-	}
-
-	function recievingData2(data) {
-		Data2 = data
-	}
-	getSource(text1,recievingData1)
-	getSource(text2,recievingData2)
-
-	return [Data1,Data2]}
 function calOnce(holdingCoin,buyingCoin,timeInterval,prefer_R,R0,day,wday){
 	const sday = day
 	let p = 0
 	let p_event = 0
 	for( let d = wday+1;d<sday+1; d++){
-		const Data = klines(holdingCoin,buyingCoin,timeInterval,d,d-(wday+1))
+		const Data = klines(holdingCoin,buyingCoin,timeInterval,"d",d,d-(wday+1))
 
 		let count1 = 0
 		let count2 = 0
@@ -453,3 +515,30 @@ async function calProOfSuccess(){
 	
 	probOfSuccessLoading.classList.remove("active")
 	probOfSuccessLoading.classList.add("inactive")}
+
+
+//Relative price tracker
+function priceTracking(){
+	let relative_price = []
+	let x = []
+	let type = 4
+	const Data = klines(holdingCoinInput.value,buyingCoinInput.value,samplingFre.value,timeUnit.value,startingTime.value,endingTime.value)
+
+	if(priceType.value==="open"){
+		type = 1
+	} else if(priceType.value==="high"){
+		type = 2
+	} else if(priceType.value==="low"){
+		type = 3
+	} else if(priceType.value==="close"){
+		type = 4
+	}
+
+	for(let i=0;i<Data[0].length;i++){
+	 	relative_price.push(Data[0][i][type]/Data[1][i][type])
+		x.push(i)
+	}
+	relativePriceTrackerData[0].x = x
+	relativePriceTrackerData[0].y = relative_price
+	Plotly.newPlot('rel-price-tracker-graph', relativePriceTrackerData,relativePriceTrackeLayout,config)
+}
