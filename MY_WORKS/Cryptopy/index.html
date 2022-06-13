@@ -39,13 +39,11 @@
 								<button class="control-btn" id="swap-tracker-setting-btn"><i class="fa-solid fa-gear"></i></button>
 								<button class="control-btn" id="swap-tracker-auto-btn"><i class="fa-solid fa-check"></i></button>
 							</div>
-							<div id="swap-tracker-graph">
-							</div>
-							<!-- <div id="swap-tracker-message"></div> -->
+							<div id="swap-tracker-graph"></div>
 							<div class="inactive" id="swap-tracker-setting">
 								<ul>
 									<il >
-										<button id="clr-graph-btn">clear</button>
+										<button id="clr-swap-tracker-graph-btn">clear</button>
 										<button class="cls-btn" id="cls-tracker-setting-btn"><i class="fa-solid fa-x"></i></button>
 									</il>
 									<il class='set-inline'>
@@ -57,6 +55,14 @@
 											<option value="hr">hr</option>
 										</select>
 									</il>
+									<il class='set-inline'>
+										<p>time interval size</p>
+										<input id="time-interval-size" type="number" value=60>
+									</il>
+									<il class='set-inline'>
+										<p>Target price</p>
+										<input id="target-price" type="number">
+									</il>
 								</ul>
 							</div>
 						</div>
@@ -65,7 +71,7 @@
 								<h2 class="small-h2">Probability of success</h2>
 								<button class="control-btn" id="prob-of-success-setting-btn"><i class="fa-solid fa-gear"></i></button>
 								<button class="control-btn" id="prob-of-success-cal-btn"><i class="fa-solid fa-check"></i></button>
-								<button class="control-btn" id="prob-of-success-auto-btn">auto</button>
+								<button class="control-btn auto-btn" id="prob-of-success-auto-btn">auto</button>
 							</div>
 							<div id="prob-of-success-graph"></div>
 							<div id="prob-of-success-message"></div>
@@ -98,18 +104,47 @@
 								</ul>
 							</div>
 						</div>
-					<div class="inactive" id="loading">
-						<div id="loading-container">
-							<div class ="active lds-default">
-								<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+						<div class="inactive loading" id="prob-of-success-loading">
+							<div class="loading-container">
+								<div class ="active lds-default">
+									<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+								</div>
 							</div>
 						</div>
 					</div>
-					</div>
 					<div class="inactive" id="third-exp-state-container">
-						<div id="price-tracker">
+						<div id="relative-price-tracker">
+							<div class = "exp-section-header">
+								<h2 class="small-h2">Relative price tracker</h2>
+								<button class="control-btn" id="rel-price-tracker-setting-btn"><i class="fa-solid fa-gear"></i></button>
+								<button class="control-btn" id="rel-price-tracker-cal-btn"><i class="fa-solid fa-check"></i></button>
+								<button class="control-btn auto-btn" id="rel-price-tracker-auto-btn">auto</button>
+							</div>
+							<div id="rel-price-tracker-graph"></div>
+							<div id="rel-price-tracker-message"></div>
+							<div class="inactive" id="rel-price-tracker-setting">
+								<ul>
+									<il>
+										<button class="cls-btn" id="cls-rel-price-tracker-setting-btn"><i class="fa-solid fa-x"></i></button>
+									</il>
+								</ul>
+							</div>
 						</div>
 						<div id="statistical-data">
+							<div class = "exp-section-header">
+								<h2>Statistical data</h2>
+								<button class="control-btn" id="statis-data-setting-btn"><i class="fa-solid fa-gear"></i></button>
+								<button class="control-btn" id="statis-data-cal-btn"><i class="fa-solid fa-check"></i></button>
+							</div>
+							<div id="statis-data-graph"></div>
+							<div id="statis-data-message"></div>
+							<div class="inactive" id="statis-data-setting">
+								<ul>
+									<il>
+										<button class="cls-btn" id="cls-statis-data-setting-btn"><i class="fa-solid fa-x"></i></button>
+									</il>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
