@@ -27,6 +27,7 @@ input {
 	border-radius: 0.3125rem;
 }
 
+
 /*Typography*/
 
 #main-body h1{
@@ -179,19 +180,17 @@ input {
 	border: solid 1px black;
 }
 
-#swap-tracker-graph{
-	margin: 10px auto;
-	width: 200px;
-	height: 160px;
-}
-
-#prob-of-success-graph {
+.graph {
 	margin: 10px auto;
 	width: 200px;
 	height: 120px;
 }
 
-#swap-tracker-setting, #prob-of-success-setting{
+#swap-tracker-graph{
+	height: 160px;
+}
+
+.setting {
 	text-align: right;
 	border-radius: 10px;
 	background-color: gray;
@@ -288,7 +287,16 @@ h2 {
 }
 
 /*third expension*/
+#rel-price-tracker-setting {
+	position: relative;
+	transform: translate(5%,-110%);
+	width: 90%;
+	height: 185px;
+}
 
+#rel-price-tracker-graph{
+	height: 160px;
+}
 
 /*Expanding*/
 .first-exp {
