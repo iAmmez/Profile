@@ -39,8 +39,8 @@
 								<button class="control-btn" id="swap-tracker-setting-btn"><i class="fa-solid fa-gear"></i></button>
 								<button class="control-btn" id="swap-tracker-auto-btn"><i class="fa-solid fa-check"></i></button>
 							</div>
-							<div id="swap-tracker-graph"></div>
-							<div class="inactive" id="swap-tracker-setting">
+							<div class="graph" id="swap-tracker-graph"></div>
+							<div class="inactive setting" id="swap-tracker-setting">
 								<ul>
 									<il >
 										<button id="clr-swap-tracker-graph-btn">clear</button>
@@ -73,9 +73,9 @@
 								<button class="control-btn" id="prob-of-success-cal-btn"><i class="fa-solid fa-check"></i></button>
 								<button class="control-btn auto-btn" id="prob-of-success-auto-btn">auto</button>
 							</div>
-							<div id="prob-of-success-graph"></div>
+							<div class="graph" id="prob-of-success-graph"></div>
 							<div id="prob-of-success-message"></div>
-							<div class="inactive" id="prob-of-success-setting">
+							<div class="inactive setting" id="prob-of-success-setting">
 								<ul>
 									<il>
 										<button class="cls-btn" id="cls-prob-of-success-setting-btn"><i class="fa-solid fa-x"></i></button>
@@ -115,17 +115,60 @@
 					<div class="inactive" id="third-exp-state-container">
 						<div id="relative-price-tracker">
 							<div class = "exp-section-header">
-								<h2 class="small-h2">Relative price tracker</h2>
+								<h2>Relative price tracker</h2>
 								<button class="control-btn" id="rel-price-tracker-setting-btn"><i class="fa-solid fa-gear"></i></button>
 								<button class="control-btn" id="rel-price-tracker-cal-btn"><i class="fa-solid fa-check"></i></button>
-								<button class="control-btn auto-btn" id="rel-price-tracker-auto-btn">auto</button>
 							</div>
-							<div id="rel-price-tracker-graph"></div>
+							<div class="graph" id="rel-price-tracker-graph"></div>
 							<div id="rel-price-tracker-message"></div>
-							<div class="inactive" id="rel-price-tracker-setting">
+							<div class="inactive setting" id="rel-price-tracker-setting">
 								<ul>
 									<il>
 										<button class="cls-btn" id="cls-rel-price-tracker-setting-btn"><i class="fa-solid fa-x"></i></button>
+									</il>
+									<il class='set-inline'>
+										<p>From</p>
+										<input id="starting-time" type="number">
+										<select id="time-unit">
+											<option value="h">hours</option>
+											<option value="d">days</option>
+											<option value="w">weeks</option>
+											<option value="M">months</option>
+										</select>
+									</il>
+									<il class='set-inline'>
+										<p>to</p>
+										<input id="ending-time" type="number" value=0>
+										<p id="showing-time-unit">hours ago</p>
+									</il>
+									<il class='set-inline'>
+										<p>Type</p>
+										<select id="price-type">
+											<option value="open">Open</option>
+											<option value="high">High</option>
+											<option value="low">Low</option>
+											<option selected="selected" value="close">Close</option>
+										</select>
+									</il>
+									<il class='set-inline'>
+										<p>Frequency</p>
+										<select id="sampling-fre">
+											<option value="1m">1 min</option>
+											<option value="3m">3 mins</option>
+											<option value="5m">5 mins</option>
+											<option value="15m">15 mins</option>
+											<option value="30m">30 mins</option>
+											<option value="1h">1 hour</option>
+											<option value="2h">2 hours</option>
+											<option value="4h">4 hours</option>
+											<option value="6h">6 hours</option>
+											<option value="8h">8 hours</option>
+											<option value="12h">12 hours</option>
+											<option value="1d">1 day</option>
+											<option value="3d">3 days</option>
+											<option value="1w">1 week</option>
+											<option value="1M">1 month</option>		
+										</select>	
 									</il>
 								</ul>
 							</div>
@@ -138,7 +181,7 @@
 							</div>
 							<div id="statis-data-graph"></div>
 							<div id="statis-data-message"></div>
-							<div class="inactive" id="statis-data-setting">
+							<div class="inactive setting" id="statis-data-setting">
 								<ul>
 									<il>
 										<button class="cls-btn" id="cls-statis-data-setting-btn"><i class="fa-solid fa-x"></i></button>
