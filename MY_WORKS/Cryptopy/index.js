@@ -17,8 +17,9 @@ const swapTrackerSetting = document.getElementById("swap-tracker-setting")
 const clsTrackerSettingBtn = document.getElementById("cls-tracker-setting-btn")
 const probOfSuccessSettingBtn = document.getElementById("prob-of-success-setting-btn")
 const probOfSuccessSetting = document.getElementById("prob-of-success-setting")
-const clsProbOfSuccessSettingBtn = document.getElementById("cls-prob-of-success-setting-btn")
 const probOfSuccessAutoBtn = document.getElementById("prob-of-success-auto-btn")
+const clsProbOfSuccessSettingBtn = document.getElementById("cls-prob-of-success-setting-btn")
+const probOfSuccessCalBtn = document.getElementById("prob-of-success-cal-btn")
 const numRateSwapping = document.getElementById("num-rate-swapping")
 const swappingRateUnit = document.getElementById("swapping-rate-unit")
 const timeIntervalInput = document.getElementById("time-interval-input")
@@ -30,16 +31,17 @@ const finalProfitInput = document.getElementById("final-profit-input")
 const probOfSuccessMessage = document.getElementById("prob-of-success-message")
 const specificPriceInput = document.getElementById("specific-price-input")
 const loading = document.getElementById("loading")
+const clrGraphBtn = document.getElementById("clr-graph-btn")
 
-const delay = 200
-let timer = 0
 let swapTrackerRun = 0
 let swapTrackerRunState = false
-let prevent = false
+let probCalRun = 0
+let probCalRunState = false
 let expState = 0
 let holding_coin_price = 0
 let buying_coin_price = 0
 let receivingAmount = 0
+let autoCal = false
 const xhttp = new XMLHttpRequest()
 
 const config = {
@@ -203,8 +205,14 @@ clsTrackerSettingBtn.addEventListener("click", function(){
 	swapTrackerSetting.classList.add("inactive")
 })
 
+clrGraphBtn.addEventListener("click",function(){
+	swapTrackerData = [{x: [],y: [],type: 'scatter',line: {color: '#FDE74C'},}]
+	Plotly.newPlot('swap-tracker-graph', swapTrackerData,swapTrackerLayout,config)
+})
+
 swapTrackerAutoBtn.addEventListener("click",function(){
 	if(!swapTrackerRunState){
+		trackingSwapping()
 		swapTrackerRun = window.setInterval('trackingSwapping()',  getSwappingRate());
 		swapTrackerRunState = true
 		swapTrackerAutoBtn.style.background = "#E3655B"
@@ -227,19 +235,27 @@ clsProbOfSuccessSettingBtn.addEventListener("click", function(){
 	probOfSuccessSetting.classList.add("inactive")
 })
 
-probOfSuccessAutoBtn.addEventListener("click",async function(){
-	for(let i =0;i<2;i++){
-		if(i===0){
-			loading.classList.remove("inactive")
-			loading.classList.add("active")
-			await sleep(500)
-		} if(i===1){
-			calProOfSuccess()
-			loading.classList.remove("active")
-			loading.classList.add("inactive")
-		}
+probOfSuccessCalBtn.addEventListener("click",async function(){
+	if(!probCalRunState)
+	{
+		probCalRunState = true
+		calProOfSuccess()
+		probCalRunState = false
 	}
+})
 
+probOfSuccessAutoBtn.addEventListener("click", function(){
+	if(!probCalRunState)
+	{
+		probCalRunState = true
+		probOfSuccessAutoBtn.style.background = "#2BB6D6"
+		calProOfSuccess()
+		probCalRun = window.setInterval('calProOfSuccess()',  getSwappingRate());
+	} else {
+		clearInterval(probCalRun)
+		probCalRunState = false
+		probOfSuccessAutoBtn.style.background = "#3891A6"
+	}
 })
 
 function getSource(CoinInput,callback) {
@@ -304,6 +320,10 @@ function getSwappingRate(){
 }
 
 async function calProOfSuccess(){
+	loading.classList.remove("inactive")
+	loading.classList.add("active")
+	await sleep(500)
+
 	holdingCoinInput.value = holdingCoinInput.value.toUpperCase()
 	buyingCoinInput.value = buyingCoinInput.value.toUpperCase()
 	let varAmount = 0
@@ -333,11 +353,13 @@ async function calProOfSuccess(){
 	probOfSuccessTrackerData[0].x = data[0]
 	probOfSuccessTrackerData[0].y = data[1]
 	probOfSuccessMessage.innerHTML = `
-	<p>at <strong>${holdingCoinInput.value} ${holding_price}</strong> USDT and 
-	<strong>${buyingCoinInput.value} ${buying_coin_price}</strong> USDT</p>
+	<p>at receive amount: <strong>${varAmount} ${buyingCoinInput.value}</strong></p>
 	<p>prob day: <strong>${String(data[3].toFixed(2))}</strong>, avg num evnts: <strong>${String(parseInt(data[2]))}</strong></p>
 	`
 	Plotly.newPlot('prob-of-success-graph', probOfSuccessTrackerData, probOfSuccessTrackerLayout,config)
+	
+	loading.classList.remove("active")
+	loading.classList.add("inactive")
 }
 
 function klines(holdingCoin,buyingCoin,timeInterval,startDay,endDay){
