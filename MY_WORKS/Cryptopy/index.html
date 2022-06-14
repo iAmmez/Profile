@@ -6,7 +6,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&display=swap" rel="stylesheet">
 		<link href="index.css" rel="stylesheet">
 		<script src="https://kit.fontawesome.com/2badc195b2.js" crossorigin="anonymous"></script>
-		<script src='https://cdn.plot.ly/plotly-2.12.1.min.js'></script>
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	</head>
 	<body>
 		<!-- The beginning of app -->
@@ -171,16 +171,15 @@
 											<option value="1M">1 month</option>		
 										</select>	
 									</il>
-								</ul>
-							</div>
+								</ul></div>
 						</div>
 						<div id="statistical-data">
 							<div class = "exp-section-header">
 								<h2>Statistical data</h2>
 								<button class="control-btn" id="statis-data-setting-btn"><i class="fa-solid fa-gear"></i></button>
-								<button class="control-btn" id="statis-data-cal-btn"><i class="fa-solid fa-check"></i></button>
+								<button class="control-btn auto-btn" id="statis-data-auto-btn">auto</button>
 							</div>
-							<div id="statis-data-graph"></div>
+							<div class="graph" id="statis-data-graph"></div>
 							<div id="statis-data-message"></div>
 							<div class="inactive setting" id="statis-data-setting">
 								<ul>
