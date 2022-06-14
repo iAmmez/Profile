@@ -50,6 +50,7 @@ const relPriceTrackerSetting		= document.getElementById("rel-price-tracker-setti
 const relPriceTrackerSettingBtn 	= document.getElementById("rel-price-tracker-setting-btn")
 const clsRelPriceTrackerSettingBtn 	= document.getElementById("cls-rel-price-tracker-setting-btn")
 const relPriceTrackerCalBtn 		= document.getElementById("rel-price-tracker-cal-btn")
+const relPriceTrackerAutoBtn		= document.getElementById("rel-price-tracker-auto-btn")
 const timeUnit						= document.getElementById("time-unit")
 const startingTime					= document.getElementById("starting-time")
 const endingTime					= document.getElementById("ending-time")
@@ -72,15 +73,21 @@ let swapTrackerRunState = false
 let probCalRun 			= 0
 let probCalRunState 	= false
 
+//Relative price tracker
+let relPriceTrackerRun = 0
+let relPriceTrackerRunState = false
+
 //Graphing
 const 	config = {displayModeBar: false,}
 let 	swapTrackerData = [{
 	x: [],
 	y: [],
+	name: "real data",
 	type: 'scatter',
 	line: {color: '#FDE74C'},},{
 	x: [],
 	y: [],
+	name: "target",
 	type: 'scatter',
 	line: {color: '#DB5461'},			
 	}]
@@ -115,12 +122,19 @@ const 	probOfSuccessTrackerLayout = {
 		family: 'Oswald',
 		size: 10,
 		color: "#FFFFFF"
-	}}
+	},}
 let 	relativePriceTrackerData = [{
 	x: [],
 	y: [],
+	name: 'real data',
 	type: 'scatter',
-	line: {color: '#FDE74C'},}]
+	line: {color: '#FDE74C'},},
+	{
+	x: [],
+	y: [],
+	name: 'target',
+	type: 'scatter',
+	line: {color: '#DB5461'},}]
 const 	relativePriceTrackeLayout = {
 	margin: {t:0,r:0,l:50,b:35},
 	xaxis: {title:{text: 'time'},
@@ -133,7 +147,8 @@ const 	relativePriceTrackeLayout = {
 		family: 'Oswald',
 		size: 10,
 		color: "#FFFFFF"
-	}}
+	},
+	showlegend: false}
 
 
 
@@ -304,8 +319,24 @@ clsRelPriceTrackerSettingBtn.addEventListener("click", function(){
 	relPriceTrackerSetting.classList.remove("active")
 	relPriceTrackerSetting.classList.add("inactive")})
 relPriceTrackerCalBtn.addEventListener("click", function(){
-	console.log("Clicked!")
-	priceTracking()
+	if(!relPriceTrackerRunState)
+	{
+		probCalRunState = true
+		priceTracking()
+		probCalRunState = false
+	}})
+relPriceTrackerAutoBtn.addEventListener("click",function(){
+	if(!relPriceTrackerRunState)
+	{
+		relPriceTrackerRunState = true
+		relPriceTrackerAutoBtn.style.background = "#2BB6D6"
+		priceTracking()
+		relPriceTrackerRun = window.setInterval('priceTracking()',  getRelPriceTrackingRate());
+	} else {
+		clearInterval(relPriceTrackerRun)
+		relPriceTrackerRunState = false
+		relPriceTrackerAutoBtn.style.background = "#3891A6"
+	}
 })
 timeUnit.addEventListener("change",function (){
 	if(timeUnit.value==="h"){
@@ -316,8 +347,7 @@ timeUnit.addEventListener("change",function (){
 		showingTimeUnit.textContent = "weeks ago"
 	} else if(timeUnit.value==="M"){
 		showingTimeUnit.textContent = "months ago"
-	}
-})
+	}})
 
 
 //--------------------------------Function declaration-----------------------------------------------
@@ -379,15 +409,15 @@ function getSource(CoinInput,callback) {
 	xhttp.open('GET',URL,false)
 	xhttp.send();}
 function getPrice(stringData){
-	 let price = 0
-	 const objectData = JSON.parse(stringData)
-	 if (stringData!=""){
-	 	if (objectData.symbol.replace('USDT', '')===holdingCoinInput.value.toUpperCase()){
-	 		holding_coin_price = parseFloat(objectData.price)
-	 	} else if (objectData.symbol.replace('USDT', '')===buyingCoinInput.value.toUpperCase()){
-	 		buying_coin_price = parseFloat(objectData.price)
-	 	}
-	 }}
+	let price = 0
+	const objectData = JSON.parse(stringData)
+	if (stringData!=""){
+		if (objectData.symbol.replace('USDT', '')===holdingCoinInput.value.toUpperCase()){
+			holding_coin_price = parseFloat(objectData.price)
+		} else if (objectData.symbol.replace('USDT', '')===buyingCoinInput.value.toUpperCase()){
+			buying_coin_price = parseFloat(objectData.price)
+		}
+	}}
 
 //Swapping
 function getSwappingRate(){
@@ -518,8 +548,44 @@ async function calProOfSuccess(){
 
 
 //Relative price tracker
+function getRelPriceTrackingRate(){
+	const stringUnit = samplingFre.value
+	let unit = 0
+	if(stringUnit==="1m"){
+		unit = 60*1000
+	}else if(stringUnit==="3m"){
+		unit = 3*60*1000
+	}else if(stringUnit==="5m"){
+		unit = 5*60*1000
+	}else if(stringUnit==="15m"){
+		unit = 15*60*1000
+	}else if(stringUnit==="30m"){
+		unit = 30*60*1000
+	}else if(stringUnit==="1h"){
+		unit = 60*60*1000
+	}else if(stringUnit==="2h"){
+		unit = 2*60*60*1000
+	}else if(stringUnit==="4h"){
+		unit = 4*60*60*1000
+	}else if(stringUnit==="6h"){
+		unit = 6*60*60*1000
+	}else if(stringUnit==="8h"){
+		unit = 8*60*60*1000
+	}else if(stringUnit==="12h"){
+		unit = 12*60*60*1000
+	}else if(stringUnit==="1d"){
+		unit = 24*60*60*1000
+	}else if(stringUnit==="3d"){
+		unit = 3*24*60*60*1000
+	}else if(stringUnit==="1w"){
+		unit = 7*24*60*60*1000
+	}else if(stringUnit==="1M"){
+		unit = 30*24*60*60*1000
+	}
+	return  unit}
 function priceTracking(){
 	let relative_price = []
+	let target_price = []
 	let x = []
 	let type = 4
 	const Data = klines(holdingCoinInput.value,buyingCoinInput.value,samplingFre.value,timeUnit.value,startingTime.value,endingTime.value)
@@ -536,9 +602,13 @@ function priceTracking(){
 
 	for(let i=0;i<Data[0].length;i++){
 	 	relative_price.push(Data[0][i][type]/Data[1][i][type])
+	 	if(targetPrice.value){
+	 		target_price.push(targetPrice.value/amountInput.value)
+	 	}
 		x.push(i)
 	}
 	relativePriceTrackerData[0].x = x
 	relativePriceTrackerData[0].y = relative_price
-	Plotly.newPlot('rel-price-tracker-graph', relativePriceTrackerData,relativePriceTrackeLayout,config)
-}
+	relativePriceTrackerData[1].x = x
+	relativePriceTrackerData[1].y = target_price
+	Plotly.newPlot('rel-price-tracker-graph', relativePriceTrackerData,relativePriceTrackeLayout,config)}
