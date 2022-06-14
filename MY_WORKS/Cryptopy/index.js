@@ -58,6 +58,13 @@ const showingTimeUnit				= document.getElementById("showing-time-unit")
 const samplingFre					= document.getElementById("sampling-fre")
 const priceType						= document.getElementById("price-type")
 
+//Statistical data
+const statisDataSetting 			= document.getElementById("statis-data-setting")
+const statisDataSettingBtn 			= document.getElementById("statis-data-setting-btn")
+const clsStatisDataSettingBtn 		= document.getElementById("cls-statis-data-setting-btn")
+const statisDataAutoBtn 			= document.getElementById("statis-data-auto-btn")
+const statisDataMessage 			= document.getElementById("statis-data-message")
+
 //-------------------------------Variable declaration-----------------------------------------------------
 let expState 			= 0			//There are 4 states, i.e., 0 1 2 3
 const xhttp 			= new XMLHttpRequest() //For GET data from API
@@ -76,6 +83,9 @@ let probCalRunState 	= false
 //Relative price tracker
 let relPriceTrackerRun = 0
 let relPriceTrackerRunState = false
+
+//Statistical data
+let startingRecord = false
 
 //Graphing
 const 	config = {displayModeBar: false,}
@@ -149,6 +159,24 @@ const 	relativePriceTrackeLayout = {
 		color: "#FFFFFF"
 	},
 	showlegend: false}
+let 	statisData = [{
+	x: [],
+	type: 'histogram',
+	marker: {color: '#FDE74C',},
+}]
+const 	statisLayout = {
+	margin: {t:0,r:0,l:50,b:35},
+	xaxis: {title:{text: 'D receiving amount'},
+			gridcolor: '#ffffff',},
+	yaxis: {title:{text: 'number'},
+			gridcolor: '#ffffff',},
+	paper_bgcolor: "#4C5B5C",
+	plot_bgcolor: "#4C5B5C",
+	font: {
+		family: 'Oswald',
+		size: 10,
+		color: "#FFFFFF"
+	},}
 
 
 
@@ -156,6 +184,7 @@ const 	relativePriceTrackeLayout = {
 Plotly.newPlot('swap-tracker-graph', swapTrackerData,swapTrackerLayout,config)
 Plotly.newPlot('prob-of-success-graph', probOfSuccessTrackerData,probOfSuccessTrackerLayout,config)
 Plotly.newPlot('rel-price-tracker-graph', relativePriceTrackerData,relativePriceTrackeLayout,config)
+Plotly.newPlot('statis-data-graph', statisData,statisLayout,config)
 
 //Waiting for clicking
 //Expansion
@@ -296,7 +325,7 @@ probOfSuccessAutoBtn.addEventListener("click", function(){
 	if(!probCalRunState)
 	{
 		probCalRunState = true
-		probOfSuccessAutoBtn.style.background = "#2BB6D6"
+		probOfSuccessAutoBtn.style.background = "#E3655B"
 		calProOfSuccess()
 		probCalRun = window.setInterval('calProOfSuccess()',  getSwappingRate());
 	} else {
@@ -329,7 +358,7 @@ relPriceTrackerAutoBtn.addEventListener("click",function(){
 	if(!relPriceTrackerRunState)
 	{
 		relPriceTrackerRunState = true
-		relPriceTrackerAutoBtn.style.background = "#2BB6D6"
+		relPriceTrackerAutoBtn.style.background = "#E3655B"
 		priceTracking()
 		relPriceTrackerRun = window.setInterval('priceTracking()',  getRelPriceTrackingRate());
 	} else {
@@ -348,6 +377,23 @@ timeUnit.addEventListener("change",function (){
 	} else if(timeUnit.value==="M"){
 		showingTimeUnit.textContent = "months ago"
 	}})
+
+//statistical data
+statisDataSettingBtn.addEventListener("click",function(){
+	statisDataSetting.classList.remove("inactive")
+	statisDataSetting.classList.add("active")})
+clsStatisDataSettingBtn.addEventListener("click", function(){
+	statisDataSetting.classList.remove("active")
+	statisDataSetting.classList.add("inactive")})
+statisDataAutoBtn.addEventListener("click", function(){
+	if(receivingAmount!==0 && startingRecord === false){
+		startingRecord = true
+		statisDataAutoBtn.style.background = "#E3655B"
+	} else {
+		startingRecord = false
+		statisDataAutoBtn.style.background = "#3891A6"
+	}
+})
 
 
 //--------------------------------Function declaration-----------------------------------------------
@@ -418,6 +464,23 @@ function getPrice(stringData){
 			buying_coin_price = parseFloat(objectData.price)
 		}
 	}}
+function mean(data){
+	let sum = 0
+	for(let i=0;i<data.length;i++){
+		sum += data[i]
+	}
+	return sum/data.length}
+function std(data){
+	let sum = 0
+	for(let i=0;i<data.length;i++){
+		sum += data[i]
+	}
+	const mean = sum/data.length
+	sum = 0
+	for(let i=0;i<data.length;i++){
+		sum += (data[i]-mean)^2
+	}
+	return Math.sqrt(sum/data.length)}
 
 //Swapping
 function getSwappingRate(){
@@ -455,7 +518,8 @@ function trackingSwapping(){
 	<p>Sell <strong>${holdingCoinInput.value.toUpperCase()}</strong> at <strong>${holding_coin_price}</strong> USDT</p>
 	<p>Buy <strong>${buyingCoinInput.value.toUpperCase()}</strong> at <strong>${buying_coin_price}</strong> USDT</p>
 	<p>Receive <strong>${receivingAmount} ${buyingCoinInput.value.toUpperCase()}</strong>
-	`}
+	`
+	recordDPrice()}
 
 //Probability of success
 function calOnce(holdingCoin,buyingCoin,timeInterval,prefer_R,R0,day,wday){
@@ -612,3 +676,18 @@ function priceTracking(){
 	relativePriceTrackerData[1].x = x
 	relativePriceTrackerData[1].y = target_price
 	Plotly.newPlot('rel-price-tracker-graph', relativePriceTrackerData,relativePriceTrackeLayout,config)}
+
+//Statistical data
+function recordDPrice(){
+	statisData[0].x = []
+	if(startingRecord){
+		for(let i=1;i<swapTrackerData[0].y.length;i++){
+			statisData[0].x.push(swapTrackerData[0].y[i]-swapTrackerData[0].y[i-1])
+		}
+		Plotly.newPlot('statis-data-graph', statisData,statisLayout,config)
+
+		statisDataMessage.innerHTML = `
+		<p>mean: ${mean(statisData[0].x).toFixed(4)}, std: ${std(statisData[0].x).toFixed(4)}</p>
+		`
+	}
+}
