@@ -1,0 +1,190 @@
+body * {
+	box-sizing: border-box;
+}
+
+body {
+	margin:0;
+	background-image: linear-gradient(45deg,#FFE6E8,#FFF);
+	font-family: 'Fascinate', cursive;
+	height: 100vh;
+	min-width: 700px;
+	text-align: center;
+	border: solid 1px black;
+}
+
+main {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.btn {
+	font-family: inherit;
+	margin: 0.1em;
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+}
+
+/*Active control*/
+.active {
+	display: block;
+}
+
+.inactive {
+	display: none;	
+}
+
+#game-title {
+	text-shadow: 0 0 10px grey;
+}
+
+#game-container,#player-container {
+	width:50%;
+	height: 420px;
+	margin: 0 10px;
+	border-radius: 20px;
+	box-shadow: 5px 5px 0 grey;
+}
+
+#game-container {
+	background-color: #F2CCC3;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#player-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #E78F8E;
+}
+
+#chef{
+	font-size: 5em;
+	border: none;
+	background-color: #E78F8E;
+}
+
+#player-container p {
+	font-size: 2em;
+}
+
+#restart-btn, #start-btn {
+	font-size: 3em;
+	border-radius: 10px;
+	background-color: #ACD8AA;
+	color: #FFF;
+	border: none;
+
+	transition: color 250ms;
+}
+
+#start-btn:hover,
+#start-btn:focus,
+#restart-btn:hover,
+#restart-btn:focus {
+	color: #404040;
+}
+
+.emoji {
+	font-size: 5em;
+}
+
+#order-title {
+	text-transform: capitalize;
+	font-size: 1.5em;
+}
+
+#order-container {
+	text-align: center;
+	width: 250px;
+	height: 200px;
+	border: solid 1px #404040;
+	border-radius: 20px;
+	margin: 20px 0;
+	box-shadow: inset 0 0 10px grey;
+	/*margin: 2em 0;*/
+}
+
+#add-ingre-btn-container button {
+	padding: 0;
+	background-color: #ACD8AA;
+	color: #FFF;
+	font-size: 2.5em;
+	width: 4rem;
+	border: none;
+	border-radius: 10px;
+	padding-bottom: 10px;
+	transform: scale(1);
+
+	transition: all 250ms;
+}
+
+#add-ingre-btn-container button:hover{
+	background-color: #41D33A;
+	transform: scale(1.1);
+}
+
+#ingre-src-container {
+	width: 50%;
+	min-width: 300px;
+	background: rgba(0,0,0,0.3);
+	border-radius: 10px;
+	border: solid 1px red;
+	position: absolute;
+	top: 180px;
+	left: 50%;
+}
+
+.ingre-emoji-btn {
+	width: 60px;
+	height: 60px;
+	padding: 0;
+	font-size: 2em;
+}
+
+#serving-btn {
+	background-color: #F48498;
+	color: #FFF;
+	font-size: 1em;
+	width: 10rem;
+	border: none;
+	border-radius: 10px;
+	padding: 10px;
+
+	transition: color 250ms;
+}
+
+#serving-btn:hover {
+	color: #404040;
+}
+
+#lim-time-bar {
+	border: none;
+	border-radius: 10px;
+	background-color: #ACD8AA;
+	height:20px;
+	width: 100%;
+}
+
+.loading{
+	animation: count-down 5.95s
+}
+
+footer {
+	margin-top: 20px;
+}
+
+@keyframes count-down {
+	0%{
+		background-color: #ACD8AA;
+		width: 100%;
+	}
+	100%{
+		background-color: red;
+		width: 0%;
+	}
+
+}
