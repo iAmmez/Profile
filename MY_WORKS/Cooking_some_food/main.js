@@ -141,7 +141,7 @@ let currentBtn = 0
 let Timer = {}
 const timeDelay = 50
 const waitingTime = 1000
-const limitTime = 6000
+const limitTime = 10000
 //player
 let chance = 3
 let score = 0
