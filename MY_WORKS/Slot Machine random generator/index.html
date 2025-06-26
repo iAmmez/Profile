@@ -1,1 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <title>🎰 Japanese Language Class Slot Machine</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Kosugi Maru', sans-serif;
+      background: linear-gradient(135deg, #f4f0e6, #d93f3f);
+      background-image:
+        radial-gradient(circle at top left, #fce4ec 15%, transparent 70%),
+        radial-gradient(circle at bottom right, #d50000cc 25%, transparent 70%);
+      color: #2b2b2b;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    h1 {
+      font-family: 'Roboto Slab', serif;
+      font-size: 3rem;
+      margin-bottom: 40px;
+      color: #d93f3f;
+      text-shadow:
+        1px 1px 0 #fff,
+        2px 2px 3px #a32222aa;
+    }
+
+    .slot-container {
+      display: flex;
+      gap: 20px;
+      background: #fff;
+      padding: 25px 40px;
+      border-radius: 20px;
+      box-shadow:
+        0 0 10px #d93f3f55,
+        0 0 40px #d93f3f88;
+    }
+
+    .reel {
+      width: 160px;
+      height: 160px;
+      background: #f8f4f1;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 4px solid #d93f3f;
+      box-shadow: 0 0 10px #d93f3faa inset;
+      position: relative;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .reel.spin-glow {
+      animation: glowPulse 1.5s infinite alternate;
+      box-shadow:
+        0 0 20px #d93f3f,
+        0 0 40px #d93f3f,
+        inset 0 0 15px #d93f3fcc;
+    }
+
+    @keyframes glowPulse {
+      0% {
+        box-shadow:
+          0 0 10px #d93f3f88,
+          0 0 20px #d93f3f88,
+          inset 0 0 8px #d93f3f88;
+      }
+      100% {
+        box-shadow:
+          0 0 30px #d93f3fff,
+          0 0 60px #d93f3fff,
+          inset 0 0 20px #d93f3fff;
+      }
+    }
+
+    .reel img {
+      width: 140px;
+      height: 140px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 4px #d93f3faa);
+      transition: transform 0.3s ease;
+    }
+
+    .text-reel {
+      font-size: 36px;
+      font-weight: 700;
+      color: #d93f3f;
+      text-shadow:
+        1px 1px 2px #fff,
+        0 0 10px #d93f3fbb;
+      user-select: none;
+      writing-mode: vertical-rl; /* vertical text for Japanese style */
+      letter-spacing: 5px;
+    }
+
+    button {
+      margin-top: 40px;
+      font-family: 'Roboto Slab', serif;
+      font-size: 26px;
+      padding: 15px 60px;
+      border: none;
+      border-radius: 35px;
+      background: #d93f3f;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 20px #d93f3fbb;
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
+      user-select: none;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    button:hover {
+      background: #a02727;
+      box-shadow: 0 0 40px #a02727cc;
+      transform: scale(1.05);
+    }
+
+    button:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 15px #7b1c1ccc;
+    }
+
+    #result {
+      margin-top: 25px;
+      font-size: 28px;
+      height: 40px;
+      text-shadow:
+        0 0 5px #d93f3f88;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎰 Japanese Language Class Slot Machine</h1>
+
+  <div class="slot-container" id="slot-container">
+    <div class="reel"><div id="reel1-text" class="text-reel">こんにちは</div></div>
+    <div class="reel"><img id="reel2" src="images/japanese/fruits/sakura.png" alt="reel"></div>
+    <div class="reel"><img id="reel3" src="images/japanese/symbols/koi.png" alt="reel"></div>
+    <div class="reel"><img id="reel4" src="images/japanese/lucky/maneki.png" alt="reel"></div>
+  </div>
+
+  <button id="spin-btn" onclick="spin()">スピン (Spin)</button>
+
+  <div id="result"></div>
+
+  <script>
+    // Japanese words for slot 1
+    const textChoices = [
+      "こんにちは", // Hello
+      "ありがとう", // Thank you
+      "さようなら", // Goodbye
+      "がんばれ",   // Good luck / Do your best
+      "すごい",     // Amazing
+      "大好き"      // I love it
+    ];
+
+    // Images in different folders representing Japanese culture
+    const slot2Symbols = [
+      { name: "banana", src: "images/fruits/banana.jpg" },
+      { name: "cherry", src: "images/fruits/cherry.jpg" },
+      { name: "grape", src: "images/fruits/grape.jpg" },
+	{ name: "lemon", src: "images/fruits/lemon.jpg" }, 
+    ];
+
+    const slot3Symbols = [
+      { name: "bell", src: "images/symbols/bell.jpg" },
+      { name: "clover", src: "images/symbols/clover.jpg" },
+      { name: "star", src: "images/symbols/star.jpg" },
+    ];
+
+    const slot4Symbols = [
+      { name: "diamond", src: "images/lucky/diamond.jpg" },     // Maneki-neko (beckoning cat)
+      { name: "horseshoe", src: "images/lucky/horseshoe.jpg" },     // Daruma doll
+      { name: "seven", src: "images/lucky/seven.jpg" },   // Kokeshi doll
+    ];
+
+    function getRandomFrom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function spinReelImage(imgElementId, symbolsArray, delay) {
+      const img = document.getElementById(imgElementId);
+      const reelDiv = img.parentElement;
+      reelDiv.classList.add('spin-glow');
+
+      return new Promise(resolve => {
+        let count = 0;
+        const interval = setInterval(() => {
+          const symbol = getRandomFrom(symbolsArray);
+          img.src = symbol.src;
+          img.alt = symbol.name;
+          count++;
+          if (count > 20) {
+            clearInterval(interval);
+            reelDiv.classList.remove('spin-glow');
+            resolve(symbol.name);
+          }
+        }, delay);
+      });
+    }
+
+    function spinReelText(textElementId, textArray, delay) {
+      const el = document.getElementById(textElementId);
+      const reelDiv = el.parentElement;
+      reelDiv.classList.add('spin-glow');
+
+      return new Promise(resolve => {
+        let count = 0;
+        const interval = setInterval(() => {
+          const word = getRandomFrom(textArray);
+          el.textContent = word;
+          count++;
+          if (count > 20) {
+            clearInterval(interval);
+            reelDiv.classList.remove('spin-glow');
+            resolve(word);
+          }
+        }, delay);
+      });
+    }
+
+    async function spin() {
+      const btn = document.getElementById("spin-btn");
+      btn.disabled = true;
+      document.getElementById("result").textContent = "";
+
+      const promises = [
+        spinReelText("reel1-text", textChoices, 50),
+        spinReelImage("reel2", slot2Symbols, 70),
+        spinReelImage("reel3", slot3Symbols, 90),
+        spinReelImage("reel4", slot4Symbols, 110),
+      ];
+
+      await Promise.all(promises);
+
+      btn.disabled = false;
+    }
+  </script>
+
+</body>
+</html>
