@@ -266,6 +266,20 @@
 	{ name: "sutabakkusu", src: "images/Place/sutabakkusu.png" },
     ];
 
+	function preloadImages(symbolsArray) {
+	  for (const symbol of symbolsArray) {
+	    const img = new Image();
+	    img.src = symbol.src;
+	  }
+	}
+	
+	// Preload all images on page load
+	window.addEventListener('load', () => {
+	  preloadImages(slot2Symbols);
+	  preloadImages(slot3Symbols);
+	  preloadImages(slot4Symbols);
+	});
+
     function getRandomFrom(arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     }
