@@ -316,7 +316,7 @@
           const word = getRandomFrom(textArray);
           el.textContent = word;
           count++;
-          if (count > 5) {
+          if (count > 20) {
             clearInterval(interval);
             reelDiv.classList.remove('spin-glow');
             resolve(word);
