@@ -302,7 +302,7 @@
           const word = getRandomFrom(textArray);
           el.textContent = word;
           count++;
-          if (count > 20) {
+          if (count > 5) {
             clearInterval(interval);
             reelDiv.classList.remove('spin-glow');
             resolve(word);
@@ -317,10 +317,10 @@
 	  document.getElementById("result").textContent = "";
 	
 	  const promises = [
-	    spinReelText("reel1-text", textChoices, 50),
-	    spinReelImage("reel2", slot2Symbols, 70),
-	    spinReelImage("reel3", slot3Symbols, 90),
-	    spinReelImage("reel4", slot4Symbols, 110),
+	    spinReelText("reel1-text", textChoices, 100),
+	    spinReelImage("reel2", slot2Symbols, 100),
+	    spinReelImage("reel3", slot3Symbols, 100),
+	    spinReelImage("reel4", slot4Symbols, 100),
 	  ];
 	
 	  const [time, person, transport, place] = await Promise.all(promises);
