@@ -144,6 +144,12 @@
         0 0 5px #d93f3f88;
       user-select: none;
     }
+
+	@keyframes flashResult {
+	  0% { background-color: #fff6f6; }
+	  50% { background-color: #ffdcdc; }
+	  100% { background-color: transparent; }
+	}
   </style>
 </head>
 <body>
@@ -306,21 +312,32 @@
     }
 
     async function spin() {
-      const btn = document.getElementById("spin-btn");
-      btn.disabled = true;
-      document.getElementById("result").textContent = "";
-
-      const promises = [
-        spinReelText("reel1-text", textChoices, 50),
-        spinReelImage("reel2", slot2Symbols, 70),
-        spinReelImage("reel3", slot3Symbols, 90),
-        spinReelImage("reel4", slot4Symbols, 110),
-      ];
-
-      await Promise.all(promises);
-
-      btn.disabled = false;
-    }
+	  const btn = document.getElementById("spin-btn");
+	  btn.disabled = true;
+	  document.getElementById("result").textContent = "";
+	
+	  const promises = [
+	    spinReelText("reel1-text", textChoices, 50),
+	    spinReelImage("reel2", slot2Symbols, 70),
+	    spinReelImage("reel3", slot3Symbols, 90),
+	    spinReelImage("reel4", slot4Symbols, 110),
+	  ];
+	
+	  const [time, person, transport, place] = await Promise.all(promises);
+	
+	  btn.disabled = false;
+	
+	  // Show a notification with the result
+	  const resultText = `🎉 ${time} / ${person} / ${transport} / ${place}`;
+	  document.getElementById("result").textContent = resultText;
+	
+	  // Optional: flash background color briefly for emphasis
+	  document.getElementById("result").style.animation = "flashResult 1s ease";
+	
+	  setTimeout(() => {
+	    document.getElementById("result").style.animation = "";
+	  }, 1000);
+	}
   </script>
 
 </body>
